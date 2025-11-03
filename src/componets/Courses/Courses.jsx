@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// main functional component for courses page
+import Online from "../../assets/images/Online.jpg";
 
 const Course = ({
   views,
@@ -21,67 +21,69 @@ const Course = ({
   id,
   addToPlayListHandler,
   creater,
-  dicription,
+  description,
   lectureCount,
 }) => {
   return (
     <VStack
       className="course"
-      alignItems={["center", "flex-start"]}
-      boxShadow={"lg"}
-      p="8"
-      borderRadius={"8"}
-
+      alignItems="center"
+      boxShadow="lg"
+      p={6}
+      borderRadius="2xl"
+      spacing={4}
+      w={["full", "300px"]}
+      bg="white"
+      _hover={{ transform: "scale(1.02)", transition: "0.3s" }}
     >
-      <Image src={imageSrc} boxSize={"60"} objectFit={"contain"} />
-      <Heading
-        textAlign={"Center"}
-        maxW={"200px"}
-        fontFamily={"sans-serif"}
-        noOfLines={3}
-        children={title}
-        size={"sm"}
+      <Image
+        src={Online}
+        alt={title}
+        boxSize="180px"
+        objectFit="cover"
+        borderRadius="lg"
       />
-      <Text children={dicription} noOfLines={2} />
-      <HStack>
-        <Text
-          fontWeight={"bold"}
-          textTransform={"uppercase"}
-          children={creater}
-          noOfLines={2}
-        />
-        <Text
-          fontFamily={"body"}
-          textTransform={"uppercase"}
-          children={creater}
-          noOfLines={2}
-        />
-      </HStack>
+
       <Heading
-        textAlign={"center"}
-        size="xs"
-        children={"Lectures - ${lectureCount}"}
-        textTransform={"uppercase"}
-      />
-      <Heading
-        size="xs"
-        children={"Views - ${Views}"}
-        textTransform={"uppercase"}
-      />
-      <Stack direction={["column", "row"]} alignItems={"center"}>
+        textAlign="center"
+        fontFamily="sans-serif"
+        noOfLines={2}
+        size="md"
+      >
+        {title}
+      </Heading>
+
+      <Text textAlign="center" fontSize="sm" noOfLines={2} color="gray.600">
+        {description}
+      </Text>
+
+      <VStack spacing={1}>
+        <Text fontWeight="bold" textTransform="uppercase">
+          {creater}
+        </Text>
+        <Text fontSize="sm" color="gray.600">
+          Lectures – {lectureCount}
+        </Text>
+        <Text fontSize="sm" color="gray.600">
+          Views – {views}
+        </Text>
+      </VStack>
+
+      <HStack spacing={4} pt={2}>
         <Link to={`/course/${id}`}>
-          <Button colorScheme={"yellow"}>Watch Now</Button>
+          <Button colorScheme="yellow" size="sm">
+            Watch Now
+          </Button>
         </Link>
         <Button
-          variant={"ghost"}
-          colorScheme={"yellow"}
+          variant="ghost"
+          colorScheme="yellow"
+          size="sm"
           onClick={() => addToPlayListHandler(id)}
-          addToPlayListHandler={addToPlayListHandler}
-
         >
           Add To Playlist
         </Button>
-      </Stack>
+      </HStack>
     </VStack>
   );
 };
@@ -90,51 +92,71 @@ const Courses = () => {
   const [keyword, setKeyword] = useState("");
   const [category, setCategory] = useState("");
 
-    const addToPlayListHandler = (id) => {
-    console.log("Added to playlist");
-  } 
+  const addToPlayListHandler = (id) => {
+    console.log("Added to playlist:", id);
+  };
 
   const categories = [
     "Web Development",
     "Artificial Intelligence",
-    "Dtastructure & Algorithm",
+    "Datastructure & Algorithm",
     "App Development",
     "Data Science",
     "Game Development",
   ];
 
   return (
-    <Container minH={"95vh"} maxW={"container.lg"} padding={"8"}>
-      <Heading children="All Courses" m={"8"} />
-      <Input
-        value={keyword}
-        onChange={(e) => setKeyword(e.target.value)}
-        placeholder="Search a Course..."
-        type="text"
-        focusBorderColor="yellow.500"
-      />
+    <Container minH="95vh" maxW="container.xl" py={8}>
+      <Heading mb={8} textAlign="center">
+        All Courses
+      </Heading>
 
-      <HStack overflowX={"auto"} paddingY={"8"}>
+      <Center>
+        <Input
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+          placeholder="Search a Course..."
+          type="text"
+          focusBorderColor="yellow.500"
+          maxW="400px"
+        />
+      </Center>
+
+      <HStack
+        overflowX="auto"
+        py={6}
+        spacing={4}
+        justifyContent="center"
+        flexWrap="wrap"
+      >
         {categories.map((item, index) => (
-          <Button key={index} onClick={() => setCategory(item)} minW={"60"}>
-            <Text children={item} />
+          <Button
+            key={index}
+            onClick={() => setCategory(item)}
+            colorScheme={category === item ? "yellow" : "gray"}
+            variant={category === item ? "solid" : "outline"}
+          >
+            {item}
           </Button>
         ))}
       </HStack>
 
       <Stack
-        direction={["column", "row"]}
-        flexWrap={"wrap"}
-        justifyContent={["flex-start", "space-evenly"]}
-        alignItems={["center", "flex-start"]}
+        direction="row"
+        flexWrap="wrap"
+        justifyContent="center"
+        alignItems="flex-start"
+        spacing={8}
+        mt={6}
       >
         <Course
-          title="Sample"
-          dicription="Sample description"
+          title="Sample Course"
+          description="This is a short sample course description."
           views={23}
-          imageSrc="https://via.placeholder.com/150"
-          creater="Sample Boy"
+          imageSrc="https://via.placeholder.com/200"
+          creater="Sample Instructor"
           lectureCount={2}
+          addToPlayListHandler={addToPlayListHandler}
         />
       </Stack>
     </Container>
