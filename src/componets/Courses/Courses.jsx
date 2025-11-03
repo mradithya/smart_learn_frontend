@@ -14,6 +14,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Online from "../../assets/images/Online.jpg";
 
+// Single Course Component
+
 const Course = ({
   views,
   title,
