@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+// main functional component for courses page
 
 const Course = ({
   views,
@@ -30,6 +31,7 @@ const Course = ({
       boxShadow={"lg"}
       p="8"
       borderRadius={"8"}
+
     >
       <Image src={imageSrc} boxSize={"60"} objectFit={"contain"} />
       <Heading
@@ -75,6 +77,7 @@ const Course = ({
           colorScheme={"yellow"}
           onClick={() => addToPlayListHandler(id)}
           addToPlayListHandler={addToPlayListHandler}
+
         >
           Add To Playlist
         </Button>
